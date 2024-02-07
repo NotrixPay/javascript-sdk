@@ -1,0 +1,34 @@
+{
+  "name": "notrix",
+  "version": "1.2.0",
+  "description": "Notrix Official JavaScript SDK",
+  "homepage": "https://notrix.io",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/NotrixPay/javascript-sdk.git"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "build-types": "tsc --declaration",
+    "start": "ts-node src/index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "payment-gateway",
+    "notrix",
+    "payments",
+    "crypto-payments"
+  ],
+  "author": "Notrix",
+  "license": "ISC",
+  "devDependencies": {
+    "ts-node": "^10.9.1",
+    "typescript": "^5.3.2"
+  },
+  "dependencies": {
+    "@types/node": "^20.10.3",
+    "axios": "^1.6.2"
+  }
+}
