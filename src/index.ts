@@ -5,7 +5,7 @@ import { CheckoutSession, CheckoutSessionLineItem } from './models';
 export default class Client {
     private readonly BASE_URL = 'https://api.notrix.io';
 
-    constructor(private readonly secretApiKey: string) { }
+    constructor(private readonly secretApiKey: string, private readonly projectId: string) { }
 
     private authHeaders(): Record<string, string> {
         return { Authorization: `Token ${this.secretApiKey}` };
@@ -41,26 +41,29 @@ export default class Client {
         webhook_url: string = ""
     ): Promise<CheckoutSession> {
         let params: Record<string, any> = {
-            success_url: successUrl,
-            cancel_url: cancelUrl,
-            line_items: items,
+            successURL: successUrl,
+            cancelURL: cancelUrl,
+            lineItems: items,
         }
         if (client_reference_id.length > 0) {
-            params["client_reference_id"] = client_reference_id
+            params["clientReferenceID"] = client_reference_id
         }
         if (webhook_url.length > 0) {
             params["webhook_url"] = webhook_url
         }
 
-        const response = await this.makeRequest<CheckoutSession>('post', 'console/checkout-sessions/', {}, params);
+        const response = await this.makeRequest<{checkoutSession: CheckoutSession}>('post', `console/projects/${this.projectId}/checkout-sessions`, {}, params);
 
-        return response;
+        return response["checkoutSession"];
     }
 
     async isPaid(checkoutPageToken: string): Promise<boolean> {
-        const response = await this.makeRequest<{ payment_confirmed: boolean }>('get', 'console/check-payment-status/', { token: checkoutPageToken }, {});
-
-        return response.payment_confirmed;
+        try{
+            const response = await this.makeRequest<any>('get', `console/payment-requests/${checkoutPageToken}/order`, {}, {});
+            return true;
+        }catch{
+            return false;
+        }
     }
 }
 

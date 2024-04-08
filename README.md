@@ -14,7 +14,7 @@ npm install notrix
 ```js
 import Client from "notrix";
 
-let client = new Client("SECRET_API_KEY");
+let client = new Client("SECRET_API_KEY", "PROJECT_ID");
 
 let checkoutSession = await client.createCheckoutSession(
     [
@@ -23,7 +23,7 @@ let checkoutSession = await client.createCheckoutSession(
             description: "green",
             price: 32.56,  // USD
             quantity: 1,
-            image: "https://example.com/bike.png"  // make sure the image is available from the notrix.io domain
+            imageURL: "https://example.com/bike.png"  // make sure the image is available from the notrix.io domain
         }
     ],
     "https://example.com/success",
@@ -36,7 +36,7 @@ console.log(checkoutSession.url);  // redirect the user here to pay
 ```js
 import Client from "notrix";
 
-let client = new Client("SECRET_API_KEY");
+let client = new Client("SECRET_API_KEY", "PROJECT_ID");
 
-let paymentConfirmed = await client.isPaid(checkoutSession.checkout_page_token);  // true / false
+let paymentConfirmed = await client.isPaid(checkoutSession.paymentRequestToken);  // true / false
 ```
