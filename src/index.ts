@@ -52,9 +52,9 @@ export default class Client {
             params["webhook_url"] = webhook_url
         }
 
-        const response = await this.makeRequest<{checkoutSession: CheckoutSession}>('post', `console/projects/${this.projectId}/checkout-sessions`, {}, params);
+        const response = await this.makeRequest<{"checkout-session": CheckoutSession}>('post', `console/projects/${this.projectId}/checkout-sessions`, {}, params);
 
-        return response["checkoutSession"];
+        return response["checkout-session"];
     }
 
     async isPaid(checkoutPageToken: string): Promise<boolean> {
