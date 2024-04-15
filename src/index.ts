@@ -49,7 +49,7 @@ export default class Client {
             params["clientReferenceID"] = client_reference_id
         }
         if (webhook_url.length > 0) {
-            params["webhook_url"] = webhook_url
+            params["webhookURL"] = webhook_url
         }
 
         const response = await this.makeRequest<{"checkout-session": CheckoutSession}>('post', `console/projects/${this.projectId}/checkout-sessions`, {}, params);
